@@ -63,7 +63,7 @@ todo.prototype.addTodo = (app, dbClient, http, message) => {
  */
 todo.prototype.getTodo = (app, dbClient, http, message) => {
     app.get('/gettodo', (req, apiresponse) => {
-        const text = 'SELECT * from todolist';
+        const text = 'SELECT todo_id, todo_value from todolist';
         dbClient.query(text, (err, res) => {
             if (err) {
                 let response = {};
@@ -118,6 +118,7 @@ todo.prototype.deleteTodo = (app, dbClient, http, message) => {
 
             let response = {};
             response.message = message.TODO_DELETE_PARAMS_MISSING;
+            response.data = "";
             response.status = http.BAD_REQUEST;
 
             apiresponse.status(http.BAD_REQUEST).send(response);
