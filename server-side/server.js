@@ -26,7 +26,14 @@ app.use(logger('dev'));
 app.use(cookieParser());
 
 // Parse Application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Set Access Controll Allow Origin.
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // Parse Application/json
 app.use(bodyParser.json())
