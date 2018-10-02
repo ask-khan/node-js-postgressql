@@ -54,6 +54,46 @@ todo.prototype.addTodo = (app, dbClient, http, message) => {
 };
 
 /**
+ * editTodo Constructor.
+ * @param {app} Express Object. 
+ * @param {dbClient} Database Object.
+ * @param {http} Standard Api Status Code.
+ * @param {message} Standard Message Object.
+ * @return None
+ */
+todo.prototype.editTodo = (app, dbClient, http, message) => {
+    app.post('/editTodo', (req, apiresponse) => {
+        if (req.body.todoId && req.body.todoId != '' && req.body.updateTodo && req.body.updateTodo != '' ) {
+            const text = 'UPDATE todolist SET todo_value=$1 WHERE todo_id=$2';
+            const value = [req.body.updateTodo ,req.body.todoId];
+            dbClient.query(text, value, (err, res) => {
+                if (err) {
+                    let response = {};
+                    response.message = message.TODO_DUPLICATE_ITEM;
+                    response.data = err.stack;
+                    response.status = http.BAD_REQUEST;
+
+                    apiresponse.status(http.BAD_REQUEST).send(response);
+                } else {
+                    let response = {};
+                    response.message = message.TODO_ADD_SUCESSFULLY;
+                    response.data = res.rows[0];
+                    response.status = http.OK;
+
+                    apiresponse.status(http.OK).send(response);
+                }
+            });
+        } else {
+            let response = {};
+            response.message = message.TODO_PARAMS_MISSING;
+            response.status = http.BAD_REQUEST;
+            apiresponse.status(http.BAD_REQUEST).send(response);
+        }
+    });
+};
+
+
+/**
  * getTodo Constructor.
  * @param {app} Express Object. 
  * @param {dbClient} Database Object.
