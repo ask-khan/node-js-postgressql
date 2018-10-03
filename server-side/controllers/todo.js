@@ -63,9 +63,9 @@ todo.prototype.addTodo = (app, dbClient, http, message) => {
  */
 todo.prototype.editTodo = (app, dbClient, http, message) => {
     app.post('/editTodo', (req, apiresponse) => {
-        if (req.body.todoId && req.body.todoId != '' && req.body.updateTodo && req.body.updateTodo != '' ) {
+        if (req.body.todo.todo_id && req.body.todo.todo_id != '' && req.body.todo.todo_value && req.body.todo.todo_value != '' ) {
             const text = 'UPDATE todolist SET todo_value=$1 WHERE todo_id=$2';
-            const value = [req.body.updateTodo ,req.body.todoId];
+            const value = [req.body.todo.todo_value ,req.body.todo.todo_id];
             dbClient.query(text, value, (err, res) => {
                 if (err) {
                     let response = {};

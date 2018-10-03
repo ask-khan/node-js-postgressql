@@ -43,8 +43,12 @@ var todoControllerObject = new todo(app, dbClient, http, message);
 todoControllerObject.addTodo(app, dbClient, http, message);
 // Get Todo.
 todoControllerObject.getTodo(app, dbClient, http, message);
+// Edit Todo.
+todoControllerObject.editTodo(app, dbClient, http, message);
 // Delete Todo.
 todoControllerObject.deleteTodo(app, dbClient, http, message);
+
+
 
 app.listen(configuration.mode.PORT, () => console.log(`listening on port ${configuration.mode.PORT}!`))
 
